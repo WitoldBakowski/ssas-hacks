@@ -7,7 +7,7 @@ $ts = [Microsoft.AnalysisServices.Tabular.Server]::new()
  $ts.Databases.ForEach({
         if ( $_.Name -like "*Shell" ) {continue}
         if (  $ts.Databases.ContainsName("$($_.Name) Shell") ) {continue}
-        Write-Host "Adding {$($_.Name) Shel}l"
+        Write-Host "Adding {$($_.Name) Shell}"
         dmCloneShell -srvName $_.Server.Name -modelName $_.Name 
  })
 }
