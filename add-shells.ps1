@@ -29,3 +29,23 @@ $dm.Model.CopyTo( $clone.Model)
 $s.Databases.Add( $clone)
 $clone.Update( [Microsoft.AnalysisServices.UpdateOptions]::ExpandFull)
 }
+
+function dmDestroyShellAll($SSAS){
+ [System.Reflection.Assembly]::LoadWithPartialName("Microsoft.AnalysisServices.Tabular") | Out-Null
+$s = [Microsoft.AnalysisServices.Tabular.Server]::new()
+ $s.Connect($SSAS )
+ $dbs = @()
+$s.Databases.ForEach(      
+   {
+           if ($_.Name -like "*Shell")
+           {
+           $dbs += $_               
+           }
+       } 
+    )
+
+for ($i = 0; $i -lt  $dbs.Count; $i++)
+{ 
+    $dbs[$i].Drop()
+}
+}
